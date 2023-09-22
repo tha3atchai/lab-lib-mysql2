@@ -26,8 +26,6 @@ const getTodo = async(req, res, next) => {
 const createTodo = async(req, res, next) => {
     try {
         const {title, completed, userId} = req.body;
-        const result = await db.query("SELECT * FROM todos WHERE user_id = ?", [userId]);
-        if(result[0].length === 0) return next(createError(400, "Todo with user_id not found."));
         await db.query("INSERT INTO todos (title, completed, user_id) VALUES (?, ?, ?)", [title, completed, userId]);
         res.status(201).send({message: "Create Todo is success."});
     }catch(err) {
